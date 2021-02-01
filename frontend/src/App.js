@@ -1,33 +1,68 @@
-import React, { useState } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import './styled/global.css'
+import React, { Component } from "react";
+import {
+MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBFormInline,
+MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem
+} from "mdbreact";
+import { BrowserRouter as Router } from 'react-router-dom';
 
-const Example = (props) => {
-  const [collapsed, setCollapsed] = useState(true);
+class NavbarPage extends Component {
+state = {
+  isOpen: false
+};
 
-  const toggleNavbar = () => setCollapsed(!collapsed);
-
-  return (
-
-    <div>
-      <Navbar color="info" light>
-        <NavbarBrand href="https://github.com/ke975/"  className="mr-auto top-fixed "><img src="https://www.flaticon.com/svg/static/icons/svg/25/25231.svg" width="40px" height="40px" alt=""/>
-        Github
-        </NavbarBrand>
-        <NavbarToggler onClick={toggleNavbar} className="mr-2" />
-        <Collapse isOpen={!collapsed} navbar>
-          <Nav navbar>
-            <NavItem>
-              <NavLink href="/components/">Sobre</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="">Habilidades</NavLink>
-            </NavItem>
-          </Nav>
-        </Collapse>
-      </Navbar>
-    </div>
-  );
+toggleCollapse = () => {
+  this.setState({ isOpen: !this.state.isOpen });
 }
 
-export default Example;
+render() {
+  return (
+    <Router>
+      <MDBNavbar color="indigo" dark expand="md">
+        <MDBNavbarBrand>
+          <strong className="white-text">Navbar</strong>
+        </MDBNavbarBrand>
+        <MDBNavbarToggler onClick={this.toggleCollapse} />
+        <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
+          <MDBNavbarNav left>
+            <MDBNavItem active>
+              <MDBNavLink to="#!">Home</MDBNavLink>
+            </MDBNavItem>
+            <MDBNavItem>
+              <MDBNavLink to="#!">Features</MDBNavLink>
+            </MDBNavItem>
+            <MDBNavItem>
+              <MDBNavLink to="#!">Pricing</MDBNavLink>
+            </MDBNavItem>
+            <MDBNavItem>
+              <MDBDropdown>
+                <MDBDropdownToggle nav caret>
+                  <span className="mr-2">Dropdown</span>
+                </MDBDropdownToggle>
+                <MDBDropdownMenu>
+                  <MDBDropdownItem href="#!">Action</MDBDropdownItem>
+                  <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
+                  <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
+                  <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
+                </MDBDropdownMenu>
+              </MDBDropdown>
+            </MDBNavItem>
+          </MDBNavbarNav>
+          <MDBNavbarNav right>
+            <MDBNavItem>
+              <MDBFormInline waves>
+                <div className="md-form my-0">
+                  <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
+                </div>
+              </MDBFormInline>
+            </MDBNavItem>
+          </MDBNavbarNav>
+        </MDBCollapse>
+         </MDBNavbar>
+        
+    </Router>
+    
+    );
+  }
+}
+
+export default NavbarPage;
